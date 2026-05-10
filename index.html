@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>美本美研选校雷达｜大陆学生版</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="选校筛选器">
+      <div class="brand">
+        <div class="brand-mark">US</div>
+        <div><strong>选校雷达</strong><span>大陆学生 · 本科/硕士</span></div>
+      </div>
+
+      <div class="toggle" role="tablist" aria-label="申请阶段">
+        <button id="ugTab" class="active" data-level="本科">本科</button>
+        <button id="gradTab" data-level="硕士">硕士</button>
+      </div>
+
+      <label class="field"><span>热门专业</span><select id="majorFilter"></select></label>
+      <label class="field"><span>城市类型</span><select id="cityFilter"></select></label>
+      <label class="field"><span>学校属性</span><select id="typeFilter"></select></label>
+      <label class="field"><span>申请定位</span><select id="fitFilter"><option value="全部">全部</option><option value="冲刺">冲刺</option><option value="匹配">匹配</option><option value="保底">保底</option></select></label>
+      <label class="field"><span>我的 GPA（可选）</span><input id="gpaInput" type="number" min="0" max="4" step="0.01" placeholder="例如 3.75" /></label>
+      <label class="field"><span>年预算上限（美元）</span><input id="budgetInput" type="range" min="30000" max="95000" step="1000" value="90000" /><b id="budgetLabel">$90k</b></label>
+
+      <section class="panel">
+        <h3>快速筛选</h3>
+        <div class="chips" id="quickChips"></div>
+      </section>
+
+      <section class="panel compact">
+        <h3>怎么看页面</h3>
+        <p>本地运行 <code>python3 -m http.server 4173</code>，浏览器打开 <code>http://127.0.0.1:4173/</code>。</p>
+      </section>
+
+      <section class="panel compact">
+        <h3>准确性说明</h3>
+        <p id="sourcePolicy">排名、费用、录取率会每年更新；每所学校详情里提供多重核验链接。</p>
+      </section>
+    </aside>
+
+    <main class="content">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">面向中国大陆学生的美国本科/硕士选校工具</p>
+          <h1>同时比较排名、强势专业、费用、城市、诺奖与录取侧重点</h1>
+          <p>支持专业、预算、城市、定位、GPA 与标签筛选；展开学校可查看申请建议、城市生活画像、费用拆分和官方来源。</p>
+        </div>
+        <div class="hero-card"><span id="updatedAt"></span><strong>数据源优先级</strong><small>学校官网 / Common Data Set / U.S. News / QS / Nobel Prize</small></div>
+      </section>
+
+      <section class="verification-banner" id="verificationSummary" aria-label="批量核验状态"></section>
+
+      <section class="stats" aria-label="汇总指标">
+        <div><span>匹配学校</span><strong id="statCount">0</strong></div>
+        <div><span>最低总预算</span><strong id="statMinCost">—</strong></div>
+        <div><span>平均录取率</span><strong id="statAvgRate">—</strong></div>
+        <div><span>最高 US News</span><strong id="statBestRank">—</strong></div>
+      </section>
+
+      <section class="toolbar">
+        <h2><span id="levelTitle">本科</span>推荐学校</h2>
+        <div class="actions">
+          <button data-sort="rank">按排名</button>
+          <button data-sort="cost">按费用</button>
+          <button data-sort="admit">按录取率</button>
+          <button id="compareBtn">对比已选</button>
+          <button id="resetBtn">重置</button>
+        </div>
+      </section>
+
+      <section id="compareBar" class="compare hidden"></section>
+      <section id="cards" class="cards" aria-live="polite"></section>
+    </main>
+  </div>
+
+  <dialog id="detailDialog">
+    <div id="dialogContent"></div>
+    <button class="close" id="closeDialog" aria-label="关闭">×</button>
+  </dialog>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
